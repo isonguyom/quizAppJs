@@ -63,6 +63,21 @@ body {
     text-align: left;
 }
 
+#questionsContainer {
+    display: none;
+}
+
+.question-item {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid gainsboro;
+    cursor: pointer;
+}
+
+.question-item:not(first-child) {
+    border: none;
+}
+
 
 @media screen and (min-width: 500px) {
     .quiz-option > div {
