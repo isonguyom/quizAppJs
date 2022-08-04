@@ -3,8 +3,7 @@
 var quizOptions = document.querySelectorAll(".quiz-option > div");
 var quiz = document.querySelectorAll(".quiz-wrapper > div");
 var questionsContainer = document.getElementById("questionsContainer");
-var questionsHolder = document.getElementById("mainQuestions"); // let startBtn = document.getElementById("startBtn")
-// Questions
+var questionsHolder = document.getElementById("questionsInner"); // Questions
 
 var quizA = [{
   question: "1. What is your name?",
@@ -43,85 +42,102 @@ quizOptions[0].addEventListener("click", function () {
   quiz[1].classList.remove("active-quiz");
   quiz[2].classList.remove("active-quiz");
   console.log("Running quiz A...");
-  quiz[0].innerHTML = "<h2>This is quiz A</h2>"; // Create start button
-
-  questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"; // Load Quiz questions
+  quiz[0].innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>"; // Load Quiz questions
 
   var startBtn = document.getElementById("startBtn");
   startBtn.addEventListener("click", function () {
+    quiz[0].innerHTML = "<h4>Quiz A</h4>";
     console.log("Quiz starts");
     quizA.forEach(function (question) {
       for (var key in question) {
-        console.log("".concat(key, ": ").concat(question[key]));
-        questionsContainer.innerHTML += "<div class='question-item'>" + "".concat(question[key]) + "</div>";
+        // console.log(`${key}: ${question[key]}`);
+        // Display questions
+        if (key == "question") {
+          questionsHolder.innerHTML += "<div class='question'>" + "".concat(question[key]) + "</div>";
+        } // Display options for answer
+
+
+        var ans = [];
+
+        if (key != "question") {
+          questionsHolder.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + "".concat(question[key]) + "</li>";
+        }
       }
+    }); // Create check score button
+
+    var newSubmitBtn = document.createElement("button");
+    newSubmitBtn.id = "scoreBtn";
+    newSubmitBtn.innerHTML = "Check Score";
+    questionsContainer.appendChild(newSubmitBtn); // Get score button and check scores
+
+    var scoreBtn = document.getElementById("scoreBtn");
+    scoreBtn.addEventListener("click", function () {
+      questionsContainer.innerHTML = "Hello! A";
     });
-    startBtn.style.display = "none";
   });
   questionsContainer.style.display = "block";
 });
-quizOptions[1].addEventListener("click", function () {
-  quizOptions[0].classList.add("short");
-  quizOptions[1].classList.add("short");
-  quizOptions[2].classList.add("short");
-  quiz[0].classList.remove("active-quiz");
-  quiz[1].classList.add("active-quiz");
-  quiz[2].classList.remove("active-quiz");
-  console.log("Running quiz B...");
-  quiz[1].innerHTML = "<h2>This is quiz B</h2>";
-  questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"; // getQuiz(quizA)
 
-  var startBtn = document.getElementById("startBtn");
-  startBtn.addEventListener("click", function () {
-    var txt = "";
-    q = quizB;
-    console.log("Quiz starts");
-
-    for (var x in q) {
-      txt += "<div class='question-item'>" + q[x] + "</div>"; // quiz[0].innerHTML = "";
-
-      questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
-      var submitAns = document.getElementById("submitAns");
-      submitAns.addEventListener("click", function () {
-        questionsContainer.innerHTML = "Hello! B";
-      });
-    }
-
-    ;
-  });
-  questionsContainer.style.display = "block";
-});
-quizOptions[2].addEventListener("click", function () {
-  quizOptions[0].classList.add("short");
-  quizOptions[1].classList.add("short");
-  quizOptions[2].classList.add("short");
-  quiz[0].classList.remove("active-quiz");
-  quiz[1].classList.remove("active-quiz");
-  quiz[2].classList.add("active-quiz");
-  console.log("Running quiz C...");
-  quiz[2].innerHTML = "<h2>This is quiz C</h2>";
-  questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"; // getQuiz(quizA)
-
-  var startBtn = document.getElementById("startBtn");
-  startBtn.addEventListener("click", function () {
-    var txt = "";
-    q = quizC;
-    console.log("Quiz starts");
-
-    for (var x in q) {
-      txt += "<div class='question-item'>" + q[x] + "</div>"; // quiz[0].innerHTML = "";
-
-      questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
-      var submitAns = document.getElementById("submitAns");
-      submitAns.addEventListener("click", function () {
-        questionsContainer.innerHTML = "Hello! C";
-      });
-    }
-
-    ;
-  });
-  questionsContainer.style.display = "block";
-}); // Load questions
+var addBorder = function addBorder(obj) {
+  // let ansOption = document.querySelectorAll(".ans-option")
+  obj.style.border = "1px solid gray";
+}; // quizOptions[1].addEventListener("click", function () {
+//     quizOptions[0].classList.add("short")
+//     quizOptions[1].classList.add("short")
+//     quizOptions[2].classList.add("short")
+//     quiz[0].classList.remove("active-quiz")
+//     quiz[1].classList.add("active-quiz")
+//     quiz[2].classList.remove("active-quiz")
+//     console.log("Running quiz B...")
+//     quiz[1].innerHTML = "<h2>This is quiz B</h2>";
+//     questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
+//     // getQuiz(quizA)
+//     let startBtn = document.getElementById("startBtn")
+//     startBtn.addEventListener("click", function () {
+//         let txt = "";
+//         q = quizB
+//         console.log("Quiz starts")
+//         for (let x in q) {
+//             txt += "<div class='question-item'>" + q[x] + "</div>";
+//             // quiz[0].innerHTML = "";
+//             questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
+//             let submitAns = document.getElementById("submitAns")
+//             submitAns.addEventListener("click", function () {
+//                 questionsContainer.innerHTML = "Hello! B"
+//             })
+//         };
+//     })
+//     questionsContainer.style.display = "block"
+// })
+// quizOptions[2].addEventListener("click", function () {
+//     quizOptions[0].classList.add("short")
+//     quizOptions[1].classList.add("short")
+//     quizOptions[2].classList.add("short")
+//     quiz[0].classList.remove("active-quiz")
+//     quiz[1].classList.remove("active-quiz")
+//     quiz[2].classList.add("active-quiz")
+//     console.log("Running quiz C...")
+//     quiz[2].innerHTML = "<h2>This is quiz C</h2>";
+//     questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
+//     // getQuiz(quizA)
+//     let startBtn = document.getElementById("startBtn")
+//     startBtn.addEventListener("click", function () {
+//         let txt = "";
+//         q = quizC
+//         console.log("Quiz starts")
+//         for (let x in q) {
+//             txt += "<div class='question-item'>" + q[x] + "</div>";
+//             // quiz[0].innerHTML = "";
+//             questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
+//             let submitAns = document.getElementById("submitAns")
+//             submitAns.addEventListener("click", function () {
+//                 questionsContainer.innerHTML = "Hello! C"
+//             })
+//         };
+//     })
+//     questionsContainer.style.display = "block"
+// })
+// Load questions
 // let getQuiz = function (q) {
 //     let txt = "";
 //     console.log("Quiz starts")

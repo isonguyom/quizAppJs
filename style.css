@@ -67,21 +67,23 @@ body {
     display: none;
 }
 
-.question-item:not(:first-child) {
-    margin-top: 10px;
+.ans-option {
+    margin-top: 5px;
     margin-left: 20px;
     padding: 3px;
     cursor: pointer;
 }
 
-.question-item:first-child {
-    border: 1px solid gainsboro;
-    padding: 7px;
+.question {
+    margin-top: 20px;
+    border-bottom: 1px solid gainsboro;
+    padding: 5px;
 }
 
-/* #scoreBtn {
-    display: none;
-} */
+#scoreBtn {
+    margin-top: 30px;
+    cursor: pointer;
+}
 
 @media screen and (min-width: 500px) {
     .quiz-option > div {

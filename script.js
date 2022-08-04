@@ -1,8 +1,7 @@
 let quizOptions = document.querySelectorAll(".quiz-option > div")
 let quiz = document.querySelectorAll(".quiz-wrapper > div")
 let questionsContainer = document.getElementById("questionsContainer")
-let questionsHolder = document.getElementById("mainQuestions")
-// let startBtn = document.getElementById("startBtn")
+let questionsHolder = document.getElementById("questionsInner")
 
 // Questions
 let quizA = [{
@@ -54,104 +53,127 @@ quizOptions[0].addEventListener("click", function () {
 
 
     console.log("Running quiz A...")
-    quiz[0].innerHTML = "<h2>This is quiz A</h2>";
-
-    // Create start button
-    questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
-  
+    quiz[0].innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>";
 
     // Load Quiz questions
     let startBtn = document.getElementById("startBtn")
     startBtn.addEventListener("click", function () {
+        quiz[0].innerHTML = "<h4>Quiz A</h4>"
         console.log("Quiz starts")
+
         quizA.forEach(question => {
             for (let key in question) {
-                console.log(`${key}: ${question[key]}`);
-                questionsContainer.innerHTML += "<div class='question-item'>" + `${question[key]}` + "</div>"
+                // console.log(`${key}: ${question[key]}`);
+
+                // Display questions
+                if (key == "question") {
+                    questionsHolder.innerHTML += "<div class='question'>" + `${question[key]}` + "</div>"
+                }
+
+                // Display options for answer
+                let ans = []
+                if (key != "question") {
+                    questionsHolder.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + `${question[key]}` + "</li>"
+
+                }
             }
-
-        
         })
-        startBtn.style.display = "none"
+
+        // Create check score button
+        let newSubmitBtn = document.createElement("button")
+        newSubmitBtn.id = "scoreBtn"
+        newSubmitBtn.innerHTML = "Check Score"
+        questionsContainer.appendChild(newSubmitBtn)
+
+        // Get score button and check scores
+        let scoreBtn = document.getElementById("scoreBtn")
+        scoreBtn.addEventListener("click", function () {
+            questionsContainer.innerHTML = "Hello! A"
+        })
     })
     questionsContainer.style.display = "block"
 
 })
 
-quizOptions[1].addEventListener("click", function () {
+let addBorder = function (obj) {
+    // let ansOption = document.querySelectorAll(".ans-option")
 
-    quizOptions[0].classList.add("short")
-    quizOptions[1].classList.add("short")
-    quizOptions[2].classList.add("short")
+    obj.style.border = "1px solid gray"
+}
+// quizOptions[1].addEventListener("click", function () {
 
-    quiz[0].classList.remove("active-quiz")
-    quiz[1].classList.add("active-quiz")
-    quiz[2].classList.remove("active-quiz")
+//     quizOptions[0].classList.add("short")
+//     quizOptions[1].classList.add("short")
+//     quizOptions[2].classList.add("short")
 
-    console.log("Running quiz B...")
-    quiz[1].innerHTML = "<h2>This is quiz B</h2>";
+//     quiz[0].classList.remove("active-quiz")
+//     quiz[1].classList.add("active-quiz")
+//     quiz[2].classList.remove("active-quiz")
 
-
-    questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
-    // getQuiz(quizA)
-
-
-    let startBtn = document.getElementById("startBtn")
-    startBtn.addEventListener("click", function () {
-        let txt = "";
-        q = quizB
-
-        console.log("Quiz starts")
-        for (let x in q) {
-            txt += "<div class='question-item'>" + q[x] + "</div>";
-
-            // quiz[0].innerHTML = "";
-            questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
-            let submitAns = document.getElementById("submitAns")
-            submitAns.addEventListener("click", function () {
-                questionsContainer.innerHTML = "Hello! B"
-            })
-        };
-    })
-    questionsContainer.style.display = "block"
-})
-
-quizOptions[2].addEventListener("click", function () {
-
-    quizOptions[0].classList.add("short")
-    quizOptions[1].classList.add("short")
-    quizOptions[2].classList.add("short")
-
-    quiz[0].classList.remove("active-quiz")
-    quiz[1].classList.remove("active-quiz")
-    quiz[2].classList.add("active-quiz")
-
-    console.log("Running quiz C...")
-    quiz[2].innerHTML = "<h2>This is quiz C</h2>";
-
-    questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
-    // getQuiz(quizA)
+//     console.log("Running quiz B...")
+//     quiz[1].innerHTML = "<h2>This is quiz B</h2>";
 
 
-    let startBtn = document.getElementById("startBtn")
-    startBtn.addEventListener("click", function () {
-        let txt = "";
-        q = quizC
+//     questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
+//     // getQuiz(quizA)
 
-        console.log("Quiz starts")
-        for (let x in q) {
-            txt += "<div class='question-item'>" + q[x] + "</div>";
 
-            // quiz[0].innerHTML = "";
-            questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
-            let submitAns = document.getElementById("submitAns")
-            submitAns.addEventListener("click", function () {
-                questionsContainer.innerHTML = "Hello! C"
-            })
-        };
-    })
-    questionsContainer.style.display = "block"
-})
+//     let startBtn = document.getElementById("startBtn")
+//     startBtn.addEventListener("click", function () {
+//         let txt = "";
+//         q = quizB
+
+//         console.log("Quiz starts")
+//         for (let x in q) {
+//             txt += "<div class='question-item'>" + q[x] + "</div>";
+
+//             // quiz[0].innerHTML = "";
+//             questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
+//             let submitAns = document.getElementById("submitAns")
+//             submitAns.addEventListener("click", function () {
+//                 questionsContainer.innerHTML = "Hello! B"
+//             })
+//         };
+//     })
+//     questionsContainer.style.display = "block"
+// })
+
+// quizOptions[2].addEventListener("click", function () {
+
+//     quizOptions[0].classList.add("short")
+//     quizOptions[1].classList.add("short")
+//     quizOptions[2].classList.add("short")
+
+//     quiz[0].classList.remove("active-quiz")
+//     quiz[1].classList.remove("active-quiz")
+//     quiz[2].classList.add("active-quiz")
+
+//     console.log("Running quiz C...")
+//     quiz[2].innerHTML = "<h2>This is quiz C</h2>";
+
+//     questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
+//     // getQuiz(quizA)
+
+
+//     let startBtn = document.getElementById("startBtn")
+//     startBtn.addEventListener("click", function () {
+//         let txt = "";
+//         q = quizC
+
+//         console.log("Quiz starts")
+//         for (let x in q) {
+//             txt += "<div class='question-item'>" + q[x] + "</div>";
+
+//             // quiz[0].innerHTML = "";
+//             questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
+//             let submitAns = document.getElementById("submitAns")
+//             submitAns.addEventListener("click", function () {
+//                 questionsContainer.innerHTML = "Hello! C"
+//             })
+//         };
+//     })
+//     questionsContainer.style.display = "block"
+// })
 
 
 // Load questions
