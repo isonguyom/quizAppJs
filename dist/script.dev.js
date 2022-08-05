@@ -7,19 +7,19 @@ var questionsHolder = document.getElementById("questionsInner"); // Questions
 
 var quizA = [{
   question: "1. What is your name?",
-  answerA: "a. name",
+  answer: "a. name",
   answerB: "b. age",
   answerC: "c. state"
 }, {
   question: "2. What is your name?",
   answerA: "a. name",
-  answerB: "b. age",
+  answer: "b. age",
   answerC: "c. state"
 }, {
   question: "3. What is your name?",
   answerA: "a. name",
   answerB: "b. age",
-  answerC: "c. state"
+  answer: "c. state"
 }];
 var quizB = {
   question: "1. Where are you from?",
@@ -47,22 +47,27 @@ quizOptions[0].addEventListener("click", function () {
   var startBtn = document.getElementById("startBtn");
   startBtn.addEventListener("click", function () {
     quiz[0].innerHTML = "<h4>Quiz A</h4>";
+    questionsHolder.innerHTML = "";
     console.log("Quiz starts");
     quizA.forEach(function (question) {
+      var qtnDiv = document.createElement("div");
+      qtnDiv.id = "qtnWrapper";
+
       for (var key in question) {
         // console.log(`${key}: ${question[key]}`);
         // Display questions
         if (key == "question") {
-          questionsHolder.innerHTML += "<div class='question'>" + "".concat(question[key]) + "</div>";
+          qtnDiv.innerHTML += "<div class='question'>" + "".concat(question[key]) + "</div>";
         } // Display options for answer
+        // let ans = []
 
-
-        var ans = [];
 
         if (key != "question") {
-          questionsHolder.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + "".concat(question[key]) + "</li>";
+          qtnDiv.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + "".concat(question[key]) + "</li>";
         }
       }
+
+      questionsHolder.appendChild(qtnDiv);
     }); // Create check score button
 
     var newSubmitBtn = document.createElement("button");
@@ -79,9 +84,20 @@ quizOptions[0].addEventListener("click", function () {
 });
 
 var addBorder = function addBorder(obj) {
-  // let ansOption = document.querySelectorAll(".ans-option")
-  obj.style.border = "1px solid gray";
-}; // quizOptions[1].addEventListener("click", function () {
+  var ansOption = document.querySelectorAll(".ans-option");
+
+  for (i = 0; i < ansOption.length; i++) {
+    if (ansOption[i] == obj) {
+      ansOption[i].classList.add("add-border"); // console.log(Object.getOwnPropertyNames(obj))
+      // if (Object.keys(ansOption[i]) == "answer") {
+      //     obj.style.border = "2px solid green"
+      // } else {
+      //     obj.style.border = "2px solid red"
+      // }
+    } else if (ansOption[i].parentNode == obj.parentNode) ansOption[i].classList.remove("add-border");
+  }
+}; // obj.style.border = "1px dotted gray"
+// quizOptions[1].addEventListener("click", function () {
 //     quizOptions[0].classList.add("short")
 //     quizOptions[1].classList.add("short")
 //     quizOptions[2].classList.add("short")
