@@ -2,6 +2,7 @@ let quizOptions = document.querySelectorAll(".quiz-option > div")
 let quiz = document.querySelectorAll(".quiz-wrapper > div")
 let questionsContainer = document.getElementById("questionsContainer")
 let questionsHolder = document.getElementById("questionsInner")
+let quizRan = false
 
 // Questions
 let quizA = [{
@@ -51,53 +52,61 @@ quizOptions[0].addEventListener("click", function () {
     quiz[1].classList.remove("active-quiz")
     quiz[2].classList.remove("active-quiz")
 
+    if (quizRan == false) {
+        console.log("Running quiz A...")
+        quiz[0].innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>";
 
-    console.log("Running quiz A...")
-    quiz[0].innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>";
+        // Load Quiz questions
+        let startBtn = document.getElementById("startBtn")
+        startBtn.addEventListener("click", function () {
 
-    // Load Quiz questions
-    let startBtn = document.getElementById("startBtn")
-    startBtn.addEventListener("click", function () {
-        quiz[0].innerHTML = "<h4>Quiz A</h4>"
-        questionsHolder.innerHTML = ""
-        console.log("Quiz starts")
+            quiz[0].innerHTML = "<h4>Quiz A</h4>"
+            questionsHolder.innerHTML = ""
+            console.log("Quiz starts")
 
-        quizA.forEach(question => {
-            let qtnDiv = document.createElement("div")
-            qtnDiv.id = "qtnWrapper"
+            quizA.forEach(question => {
+                let qtnDiv = document.createElement("div")
+                qtnDiv.id = "qtnWrapper"
 
-            for (let key in question) {
-                // console.log(`${key}: ${question[key]}`);
+                for (let key in question) {
+                    // console.log(`${key}: ${question[key]}`);
 
-                // Display questions
-                if (key == "question") {
-                    qtnDiv.innerHTML += "<div class='question'>" + `${question[key]}` + "</div>"
+                    // Display questions
+                    if (key == "question") {
+                        qtnDiv.innerHTML += "<div class='question'>" + `${question[key]}` + "</div>"
+                    }
+
+                    // Display options for answer
+                    // let ans = []
+                    if (key != "question") {
+                        if (key == "answer") {
+                            qtnDiv.innerHTML += "<li class='ans-option ans' onclick='addBorder(this)'>" + `${question[key]}` + "</li>"
+
+                        }
+                        if (key != "answer") {
+                            qtnDiv.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + `${question[key]}` + "</li>"
+                        }
+
+                    }
+
+
                 }
 
-                // Display options for answer
-                // let ans = []
-                if (key != "question") {
-                    qtnDiv.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + `${question[key]}` + "</li>"
+                questionsHolder.appendChild(qtnDiv)
+            })
 
-                }
-            }
+            // Create check score button
+            let newSubmitBtn = document.createElement("button")
+            newSubmitBtn.id = "scoreBtn"
+            newSubmitBtn.innerHTML = "Check Score"
+            questionsContainer.appendChild(newSubmitBtn)
 
-            questionsHolder.appendChild(qtnDiv)
+            // Get score button and check scores
+            let scoreBtn = document.getElementById("scoreBtn")
+            scoreBtn.addEventListener("click", checkScore)
         })
-
-        // Create check score button
-        let newSubmitBtn = document.createElement("button")
-        newSubmitBtn.id = "scoreBtn"
-        newSubmitBtn.innerHTML = "Check Score"
-        questionsContainer.appendChild(newSubmitBtn)
-
-        // Get score button and check scores
-        let scoreBtn = document.getElementById("scoreBtn")
-        scoreBtn.addEventListener("click", function () {
-            questionsContainer.innerHTML = "Hello! A"
-        })
-    })
-    questionsContainer.style.display = "block"
+        questionsContainer.style.display = "block"
+    }
 
 })
 
@@ -109,7 +118,7 @@ let addBorder = function (obj) {
         if (ansOption[i] == obj) {
             ansOption[i].classList.add("add-border")
             // console.log(Object.getOwnPropertyNames(obj))
-            // if (Object.keys(ansOption[i]) == "answer") {
+            // if (ansOption[i].classList.contains("ans")) {
             //     obj.style.border = "2px solid green"
             // } else {
             //     obj.style.border = "2px solid red"
@@ -117,6 +126,27 @@ let addBorder = function (obj) {
         } else if (ansOption[i].parentNode == obj.parentNode)
             ansOption[i].classList.remove("add-border")
     }
+}
+
+let checkScore = function () {
+    let valArray = [];
+    let val, sumOfAns
+    let selected = document.querySelectorAll(".add-border")
+    for (i = 0; i < selected.length; i++) {
+        let correctAns = selected[i].classList.contains("ans")
+        if (correctAns) {
+            val = 1
+        } else {
+            val = 0
+        }
+        valArray.push(val)
+        // console.log(valArray)
+    }
+
+    // sumOfAns =
+    console.log(valArray)
+    questionsContainer.innerHTML = valArray.length
+    quizRan = true
 }
 // obj.style.border = "1px dotted gray"
 
