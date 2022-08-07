@@ -23,6 +23,12 @@ let quizA = [{
         answerB: "b. age",
         answer: "c. state",
     },
+    {
+        question: "4. What is your name?",
+        answerA: "a. name",
+        answerB: "b. age",
+        answer: "c. state",
+    },
 
 ]
 
@@ -130,7 +136,7 @@ let addBorder = function (obj) {
 
 let checkScore = function () {
     let valArray = [];
-    let val, sumOfAns
+    let val, perc, message, sumOfAns = 0
     let selected = document.querySelectorAll(".add-border")
     for (i = 0; i < selected.length; i++) {
         let correctAns = selected[i].classList.contains("ans")
@@ -142,10 +148,24 @@ let checkScore = function () {
         valArray.push(val)
         // console.log(valArray)
     }
+    
+    // Sum score
+    for (let i = 0; i < valArray.length; i++) {
+        sumOfAns += valArray[i];
+    }
+
+    // Calculate percentage
+    perc = (sumOfAns/valArray.length)*100
+
+    if (perc >= 45) {
+        message = "Congratulations! you pass the quiz.\n Your score is " + perc + "%"
+    } else {
+        message = "Ooh! you failed the quiz.\n Your score is " + perc + "%"
+    }
 
     // sumOfAns =
-    console.log(valArray)
-    questionsContainer.innerHTML = valArray.length
+    console.log(valArray +"=" + sumOfAns + "perc = " + perc)
+    questionsContainer.innerHTML = message
     quizRan = true
 }
 // obj.style.border = "1px dotted gray"

@@ -21,6 +21,11 @@ var quizA = [{
   answerA: "a. name",
   answerB: "b. age",
   answer: "c. state"
+}, {
+  question: "4. What is your name?",
+  answerA: "a. name",
+  answerB: "b. age",
+  answer: "c. state"
 }];
 var quizB = {
   question: "1. Where are you from?",
@@ -108,7 +113,10 @@ var addBorder = function addBorder(obj) {
 
 var checkScore = function checkScore() {
   var valArray = [];
-  var val, sumOfAns;
+  var val,
+      perc,
+      message,
+      sumOfAns = 0;
   var selected = document.querySelectorAll(".add-border");
 
   for (i = 0; i < selected.length; i++) {
@@ -121,11 +129,25 @@ var checkScore = function checkScore() {
     }
 
     valArray.push(val); // console.log(valArray)
+  } // Sum score
+
+
+  for (var _i = 0; _i < valArray.length; _i++) {
+    sumOfAns += valArray[_i];
+  } // Calculate percentage
+
+
+  perc = sumOfAns / valArray.length * 100;
+
+  if (perc >= 45) {
+    message = "Congratulations! you pass the quiz.\n Your score is " + perc + "%";
+  } else {
+    message = "Ooh! you failed the quiz.\n Your score is " + perc + "%";
   } // sumOfAns =
 
 
-  console.log(valArray);
-  questionsContainer.innerHTML = valArray.length;
+  console.log(valArray + "=" + sumOfAns + "perc = " + perc);
+  questionsContainer.innerHTML = message;
   quizRan = true;
 }; // obj.style.border = "1px dotted gray"
 // quizOptions[1].addEventListener("click", function () {
