@@ -15,56 +15,64 @@ html {
 body {
     /* font-family: 'Righteous', cursive; */
     /* background-color: #806367; */
+    color: rgb(70, 70, 70);
     scroll-behavior: smooth;
     padding: 15px 30px;
 }
 
-.quiz-wrapper [class^="quiz-"] {
-    display: none;
-}
-
-.quiz-wrapper [class^="quiz-"].active-quiz {
-    display: block;
-}
-
 .page-title {
     margin-bottom: 30px;
+    text-align: center;
 }
 
 
 .quiz-option {
     width: 100%;
+    min-height: 80vh;
     display: flex;
     flex-flow: wrap;
     justify-content: space-between;
+    align-items: center;
 }
 
 .quiz-option > div {
     cursor: pointer;
     width: 100%;
     height: 300px;
-    background-color: blueviolet;
+    color: beige;
+    text-align: center;
+    /* background-color: black; */
+    background-size: cover;
+    border-radius: 10px;
     margin-bottom: 7px;
     padding: 10px;
-    text-align: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .quiz-option .div1{
-    background-color: brown;
+    background-image: url("./images/caspar-camille-rubin-fPkvU7RDmCo-unsplash.jpg");
 }
+
 .quiz-option .div2{
-    background-color: darkorange;
+    background-image: url("./images/Cruise\ Ship.jpg");
 }
-/* .quiz-option .div3{} */
+
+.quiz-option .div3{
+    background-image: url("./images/green-and-gray-evergreen-cargo-ship-1117210.jpg");
+}
+
+.quiz-option.short {
+    min-height: fit-content;
+    align-items: flex-start;
+}
 
 .quiz-option > div.short {
     cursor: pointer;
     height: auto;
     text-align: left;
-}
-
-#questionsContainer {
-    display: none;
 }
 
 .ans-option {

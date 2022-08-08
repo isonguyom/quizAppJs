@@ -1,44 +1,61 @@
+// JAVASCRIPT QUIZ APP
+
+// Global declarations
+let optionContainer = document.querySelector(".quiz-option")
 let quizOptions = document.querySelectorAll(".quiz-option > div")
-let quiz = document.querySelectorAll(".quiz-wrapper > div")
+let quizTitle = document.querySelector("#quizTitle")
 let questionsContainer = document.getElementById("questionsContainer")
 let questionsHolder = document.getElementById("questionsInner")
 let quizRan = false
 
 // Questions
 let quizA = [{
-        question: "1. What is your name?",
+        question: "1. Which quiz is this?",
+        answer: "a. A",
+        answerB: "b. B",
+        answerC: "c. C",
+    },
+    {
+        question: "2. What is your name?",
         answer: "a. name",
         answerB: "b. age",
         answerC: "c. state",
     },
     {
-        question: "2. What is your name?",
+        question: "3. What is your age?",
         answerA: "a. name",
         answer: "b. age",
         answerC: "c. state",
     },
     {
-        question: "3. What is your name?",
-        answerA: "a. name",
-        answerB: "b. age",
-        answer: "c. state",
-    },
-    {
-        question: "4. What is your name?",
-        answerA: "a. name",
-        answerB: "b. age",
-        answer: "c. state",
+        question: "4. What is 1 + 1",
+        answerA: "a. 3",
+        answerB: "b. 1",
+        answer: "c. 2",
     },
 
 ]
 
-let quizB = {
-    question: "1. Where are you from?",
+let quizB =[ {
+    question: "1. Which quiz is this?",
+    answerA: "a. A",
+    answer: "b. B",
+    answerC: "c. C",
+},
+{
+    question: "2. Where are you from?",
     answerA: "a. name",
+    answerB: "b. age",
+    answer: "c. state",
+},
+{
+    question: "3. Where are you going?",
+    answer: "a. home",
     answerB: "b. age",
     answerC: "c. state",
 }
 
+]
 let quizC = {
     question: "1. What is your age?",
     answerA: "a. name",
@@ -47,78 +64,80 @@ let quizC = {
 }
 
 
-// Select which quiz you want to run
-quizOptions[0].addEventListener("click", function () {
+// Run quiz function
+let runQuiz = function (q) {
+    optionContainer.classList.add("short")
 
-    quizOptions[0].classList.add("short")
-    quizOptions[1].classList.add("short")
-    quizOptions[2].classList.add("short")
-
-    quiz[0].classList.add("active-quiz")
-    quiz[1].classList.remove("active-quiz")
-    quiz[2].classList.remove("active-quiz")
+    for (i = 0; i < quizOptions.length; i++) {
+        quizOptions[i].classList.add("short")
+    }
 
     if (quizRan == false) {
         console.log("Running quiz A...")
-        quiz[0].innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>";
+        quizTitle.innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>";
 
         // Load Quiz questions
         let startBtn = document.getElementById("startBtn")
-        startBtn.addEventListener("click", function () {
+        startBtn.addEventListener("click", function (quiz) {
+            quiz = q
+            displayQuestions(quiz)
+        })
+    }
+}
 
-            quiz[0].innerHTML = "<h4>Quiz A</h4>"
-            questionsHolder.innerHTML = ""
-            console.log("Quiz starts")
 
-            quizA.forEach(question => {
-                let qtnDiv = document.createElement("div")
-                qtnDiv.id = "qtnWrapper"
+// Function to display quiz questions
+let displayQuestions = function (quiz) {
 
-                for (let key in question) {
-                    // console.log(`${key}: ${question[key]}`);
+    quizTitle.innerHTML = "<h4>Quiz A</h4>"
+    questionsHolder.innerHTML = ""
+    console.log("Quiz starts")
 
-                    // Display questions
-                    if (key == "question") {
-                        qtnDiv.innerHTML += "<div class='question'>" + `${question[key]}` + "</div>"
-                    }
+    // get quiz
+    getQuestions(quiz)
 
-                    // Display options for answer
-                    // let ans = []
-                    if (key != "question") {
-                        if (key == "answer") {
-                            qtnDiv.innerHTML += "<li class='ans-option ans' onclick='addBorder(this)'>" + `${question[key]}` + "</li>"
+    // Create check score button
+    let newSubmitBtn = document.createElement("button")
+    newSubmitBtn.id = "scoreBtn"
+    newSubmitBtn.innerHTML = "Check Score"
+    questionsContainer.appendChild(newSubmitBtn)
 
-                        }
-                        if (key != "answer") {
-                            qtnDiv.innerHTML += "<li class='ans-option' onclick='addBorder(this)'>" + `${question[key]}` + "</li>"
-                        }
+    // Get score button and check scores
+    let scoreBtn = document.getElementById("scoreBtn")
+    scoreBtn.addEventListener("click", displayScore)
+}
 
-                    }
+// Get quiz question function
+let getQuestions = function (quiz) {
+    quiz.forEach(question => {
+        let qtnDiv = document.createElement("div")
+        qtnDiv.id = "qtnWrapper"
 
+        for (let key in question) {
+
+            // Display questions
+            if (key == "question") {
+                qtnDiv.innerHTML += "<div class='question'>" + `${question[key]}` + "</div>"
+            }
+
+            // Display options for answer
+            if (key != "question") {
+                if (key == "answer") {
+                    qtnDiv.innerHTML += "<li class='ans-option ans' onclick='getAns(this)'>" + `${question[key]}` + "</li>"
 
                 }
+                if (key != "answer") {
+                    qtnDiv.innerHTML += "<li class='ans-option' onclick='getAns(this)'>" + `${question[key]}` + "</li>"
+                }
+            }
+        }
 
-                questionsHolder.appendChild(qtnDiv)
-            })
+        questionsHolder.appendChild(qtnDiv)
+    })
 
-            // Create check score button
-            let newSubmitBtn = document.createElement("button")
-            newSubmitBtn.id = "scoreBtn"
-            newSubmitBtn.innerHTML = "Check Score"
-            questionsContainer.appendChild(newSubmitBtn)
+}
 
-            // Get score button and check scores
-            let scoreBtn = document.getElementById("scoreBtn")
-            scoreBtn.addEventListener("click", checkScore)
-        })
-        questionsContainer.style.display = "block"
-    }
-
-})
-
-
-
-let addBorder = function (obj) {
+let getAns = function (obj) {
     let ansOption = document.querySelectorAll(".ans-option")
     for (i = 0; i < ansOption.length; i++) {
         if (ansOption[i] == obj) {
@@ -134,7 +153,7 @@ let addBorder = function (obj) {
     }
 }
 
-let checkScore = function () {
+let displayScore = function () {
     let valArray = [];
     let val, perc, message, sumOfAns = 0
     let selected = document.querySelectorAll(".add-border")
@@ -148,14 +167,14 @@ let checkScore = function () {
         valArray.push(val)
         // console.log(valArray)
     }
-    
+
     // Sum score
     for (let i = 0; i < valArray.length; i++) {
         sumOfAns += valArray[i];
     }
 
     // Calculate percentage
-    perc = (sumOfAns/valArray.length)*100
+    perc = (sumOfAns / valArray.length) * 100
 
     if (perc >= 45) {
         message = "Congratulations! you pass the quiz.\n Your score is " + perc + "%"
@@ -164,100 +183,16 @@ let checkScore = function () {
     }
 
     // sumOfAns =
-    console.log(valArray +"=" + sumOfAns + "perc = " + perc)
+    console.log(valArray + "=" + sumOfAns + "perc = " + perc)
     questionsContainer.innerHTML = message
     quizRan = true
 }
-// obj.style.border = "1px dotted gray"
+
+
+quizOptions[0].addEventListener("click", function () {
+    runQuiz(quizA)
+})
 
 // quizOptions[1].addEventListener("click", function () {
-
-//     quizOptions[0].classList.add("short")
-//     quizOptions[1].classList.add("short")
-//     quizOptions[2].classList.add("short")
-
-//     quiz[0].classList.remove("active-quiz")
-//     quiz[1].classList.add("active-quiz")
-//     quiz[2].classList.remove("active-quiz")
-
-//     console.log("Running quiz B...")
-//     quiz[1].innerHTML = "<h2>This is quiz B</h2>";
-
-
-//     questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
-//     // getQuiz(quizA)
-
-
-//     let startBtn = document.getElementById("startBtn")
-//     startBtn.addEventListener("click", function () {
-//         let txt = "";
-//         q = quizB
-
-//         console.log("Quiz starts")
-//         for (let x in q) {
-//             txt += "<div class='question-item'>" + q[x] + "</div>";
-
-//             // quiz[0].innerHTML = "";
-//             questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
-//             let submitAns = document.getElementById("submitAns")
-//             submitAns.addEventListener("click", function () {
-//                 questionsContainer.innerHTML = "Hello! B"
-//             })
-//         };
-//     })
-//     questionsContainer.style.display = "block"
+//     runQuiz(quizB)
 // })
-
-// quizOptions[2].addEventListener("click", function () {
-
-//     quizOptions[0].classList.add("short")
-//     quizOptions[1].classList.add("short")
-//     quizOptions[2].classList.add("short")
-
-//     quiz[0].classList.remove("active-quiz")
-//     quiz[1].classList.remove("active-quiz")
-//     quiz[2].classList.add("active-quiz")
-
-//     console.log("Running quiz C...")
-//     quiz[2].innerHTML = "<h2>This is quiz C</h2>";
-
-//     questionsContainer.innerHTML = "<button id='startBtn'>Start Quiz</button>"
-//     // getQuiz(quizA)
-
-
-//     let startBtn = document.getElementById("startBtn")
-//     startBtn.addEventListener("click", function () {
-//         let txt = "";
-//         q = quizC
-
-//         console.log("Quiz starts")
-//         for (let x in q) {
-//             txt += "<div class='question-item'>" + q[x] + "</div>";
-
-//             // quiz[0].innerHTML = "";
-//             questionsContainer.innerHTML = txt + "<button id='submitAns'>Check score</button>";
-//             let submitAns = document.getElementById("submitAns")
-//             submitAns.addEventListener("click", function () {
-//                 questionsContainer.innerHTML = "Hello! C"
-//             })
-//         };
-//     })
-//     questionsContainer.style.display = "block"
-// })
-
-
-// Load questions
-// let getQuiz = function (q) {
-//     let txt = "";
-
-//     console.log("Quiz starts")
-//     for (let x in q) {
-//         txt += "<div class='question-item'>" + q[x] + "</div>";
-
-//         quiz[0].innerHTML = "";
-//         questionsContainer.innerHTML = txt;
-//     };
-// }
-
-// let startBtn = document.getElementById("startBtn")
-// startBtn.addEventListener("click", getQuiz(quizA))
