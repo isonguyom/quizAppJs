@@ -2,12 +2,10 @@
 
 // JAVASCRIPT QUIZ APP
 // Global declarations
-var optionContainer = document.querySelector(".quiz-option");
-var quizOptions = document.querySelectorAll(".quiz-option > div");
-var quizTitle = document.querySelector("#quizTitle");
-var questionsContainer = document.getElementById("questionsContainer");
-var questionsHolder = document.getElementById("questionsInner");
-var quizRan = false; // Questions
+var quizWrapper = document.getElementById("quizWrapper");
+var qtnsWrapper = document.querySelector(".qtn-wrapper");
+var quizOptions = document.querySelectorAll(".quiz-wrapper > div");
+var quizRan = [false, false, false]; // QUIZ QUESTIONS
 
 var quizA = [{
   question: "1. Which quiz is this?",
@@ -46,54 +44,94 @@ var quizB = [{
   answerB: "b. age",
   answerC: "c. state"
 }];
-var quizC = {
-  question: "1. What is your age?",
+var quizC = [{
+  question: "1. Which quiz is this?",
+  answerA: "a. A",
+  answerB: "b. B",
+  answer: "c. C"
+}, {
+  question: "2. What is your age?",
+  answerA: "a. name",
+  answer: "b. age",
+  answerC: "c. state"
+}, {
+  question: "3. Where are you from?",
   answerA: "a. name",
   answerB: "b. age",
+  answer: "c. state"
+}, {
+  question: "4. Where are you going?",
+  answer: "a. home",
+  answerB: "b. age",
   answerC: "c. state"
-}; // Run quiz function
+}]; // Run quiz function
 
-var runQuiz = function runQuiz(q) {
-  optionContainer.classList.add("short");
+var runQuiz = function runQuiz(qId, no, q) {
+  quizWrapper.classList.add("short");
 
   for (i = 0; i < quizOptions.length; i++) {
     quizOptions[i].classList.add("short");
-  }
+  } // Check if quiz has been ran already
 
-  if (quizRan == false) {
-    console.log("Running quiz A...");
-    quizTitle.innerHTML = "<h2>This is quiz A</h2><br><button id='startBtn'>Start Quiz</button>"; // Load Quiz questions
+
+  if (quizRan[no] == false) {
+    var titleTxt = "<h2>This is quiz " + qId + "</h2>";
+    var createStartBtn = "<button id='startBtn'>Start Quiz</button>"; // Create quiz questions and description display div
+
+    var qtnsInner = document.createElement("div");
+    qtnsInner.id = "qtnInner" + qId;
+    qtnsInner.classList.add("qtn-inner");
+    qtnsWrapper.appendChild(qtnsInner); // Indicate the quiz running
+
+    console.log("Running quiz" + qId + "..."); // Create quiz title div
+
+    var quizTitle = document.createElement("div");
+    quizTitle.id = "quizTitle" + qId; // Add title text and start quiz button
+
+    quizTitle.innerHTML = titleTxt + "<br>" + createStartBtn;
+    qtnsInner.appendChild(quizTitle); // Load Quiz questions
 
     var startBtn = document.getElementById("startBtn");
-    startBtn.addEventListener("click", function (quiz) {
+    startBtn.addEventListener("click", function (quiz, id, qNo) {
       quiz = q;
-      displayQuestions(quiz);
+      id = qId;
+      qNo = no;
+      quizTitle.innerHTML = "<h4>Quiz " + id + "</h4>";
+      displayQuestions(quiz, id, qNo);
     });
   }
 }; // Function to display quiz questions
 
 
-var displayQuestions = function displayQuestions(quiz) {
-  quizTitle.innerHTML = "<h4>Quiz A</h4>";
-  questionsHolder.innerHTML = "";
-  console.log("Quiz starts"); // get quiz
+var displayQuestions = function displayQuestions(quiz, id, qNo) {
+  console.log("Quiz starts");
+  var qtnsInner = document.getElementById("qtnInner" + id);
+  var qtnsHolder = document.createElement("div");
+  qtnsHolder.id = "qtnsHolder" + id;
+  qtnsHolder.innerHTML = "";
+  qtnsInner.appendChild(qtnsHolder); // get quiz
 
-  getQuestions(quiz); // Create check score button
+  getQuestions(quiz, id); // Create check score button
 
   var newSubmitBtn = document.createElement("button");
   newSubmitBtn.id = "scoreBtn";
   newSubmitBtn.innerHTML = "Check Score";
-  questionsContainer.appendChild(newSubmitBtn); // Get score button and check scores
+  qtnsInner.appendChild(newSubmitBtn); // Get score button and check scores
 
   var scoreBtn = document.getElementById("scoreBtn");
-  scoreBtn.addEventListener("click", displayScore);
+  scoreBtn.addEventListener("click", function (qId, no) {
+    qId = id;
+    no = qNo;
+    displayScore(qId, no);
+  });
 }; // Get quiz question function
 
 
-var getQuestions = function getQuestions(quiz) {
+var getQuestions = function getQuestions(quiz, id) {
+  var qtnsHolder = document.getElementById("qtnsHolder" + id);
   quiz.forEach(function (question) {
     var qtnDiv = document.createElement("div");
-    qtnDiv.id = "qtnWrapper";
+    qtnDiv.id = "qtnDiv";
 
     for (var key in question) {
       // Display questions
@@ -113,30 +151,28 @@ var getQuestions = function getQuestions(quiz) {
       }
     }
 
-    questionsHolder.appendChild(qtnDiv);
+    qtnsHolder.appendChild(qtnDiv);
   });
-};
+}; // Indicate user answers
+
 
 var getAns = function getAns(obj) {
   var ansOption = document.querySelectorAll(".ans-option");
 
   for (i = 0; i < ansOption.length; i++) {
     if (ansOption[i] == obj) {
-      ansOption[i].classList.add("add-border"); // console.log(Object.getOwnPropertyNames(obj))
-      // if (ansOption[i].classList.contains("ans")) {
-      //     obj.style.border = "2px solid green"
-      // } else {
-      //     obj.style.border = "2px solid red"
-      // }
+      ansOption[i].classList.add("add-border");
     } else if (ansOption[i].parentNode == obj.parentNode) ansOption[i].classList.remove("add-border");
   }
-};
+}; // Calculate and display the score
 
-var displayScore = function displayScore() {
+
+var displayScore = function displayScore(id, no) {
+  var qtnsInner = document.getElementById("qtnInner" + id);
   var valArray = [];
   var val,
       perc,
-      message,
+      message = "",
       sumOfAns = 0;
   var selected = document.querySelectorAll(".add-border");
 
@@ -158,22 +194,28 @@ var displayScore = function displayScore() {
   } // Calculate percentage
 
 
-  perc = sumOfAns / valArray.length * 100;
+  perc = Math.round(sumOfAns / valArray.length * 100);
 
   if (perc >= 45) {
-    message = "Congratulations! you pass the quiz.\n Your score is " + perc + "%";
+    message = "<h3 class='message pass'>Congratulations! you pass the quiz.<br><br>Your score is " + perc + "%</h3>";
   } else {
-    message = "Ooh! you failed the quiz.\n Your score is " + perc + "%";
+    message = "<h3 class='message fail'>Ooh! you failed the quiz.<br><br>Your score is " + perc + "%</h3>";
   } // sumOfAns =
 
 
   console.log(valArray + "=" + sumOfAns + "perc = " + perc);
-  questionsContainer.innerHTML = message;
-  quizRan = true;
-};
+  qtnsInner.innerHTML = message;
+  qtnsInner.classList.add("flex");
+  quizRan[no] = true;
+}; // Event origin
+
 
 quizOptions[0].addEventListener("click", function () {
-  runQuiz(quizA);
-}); // quizOptions[1].addEventListener("click", function () {
-//     runQuiz(quizB)
-// })
+  runQuiz("A", 0, quizA);
+});
+quizOptions[1].addEventListener("click", function () {
+  runQuiz("B", 1, quizB);
+});
+quizOptions[2].addEventListener("click", function () {
+  runQuiz("C", 2, quizC);
+});
