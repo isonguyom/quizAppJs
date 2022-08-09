@@ -81,6 +81,7 @@ button:hover {
 .quiz-wrapper p {
     opacity: 0.9;
     margin-top: 7px;
+    text-align: center;
 }
 
 .quiz-wrapper .div1 {
