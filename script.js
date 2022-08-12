@@ -4,34 +4,44 @@
 let quizWrapper = document.getElementById("quizWrapper")
 let qtnsWrapper = document.querySelector(".qtn-wrapper")
 let quizOptions = document.querySelectorAll(".quiz-wrapper > div")
+let qtnNode = document.querySelectorAll(".qtn-inner")
 let quizRan = [false, false, false]
+let quizNode = []
+console.log(qtnNode)
 
 
 
 // QUIZ QUESTIONS
+// Quiz A (Javascipt knowledge)
 let quizA = [{
-        question: "1. Which quiz is this?",
-        answer: "a. A",
-        answerB: "b. B",
-        answerC: "c. C",
+        question: "1. Which of the following are the three core languages of web development?",
+        answerA: "a. HTML, JavaScript, and Python",
+        answer: "b. HTML, CSS, and JavaScript",
+        answerC: "c. HTML, JavaScript, and PHP",
     },
     {
-        question: "2. What is your name?",
-        answer: "a. name",
-        answerB: "b. age",
-        answerC: "c. state",
+        question: "2. JavaScript was invented in 1995 by whom?",
+        answerA: "a. Tim Berners-Lee",
+        answerB: "b. James Gosling ",
+        answer: "c. Brendan Eich",
     },
     {
-        question: "3. What is your age?",
-        answerA: "a. name",
-        answer: "b. age",
-        answerC: "c. state",
+        question: "3. Which of the following can not be used to declare a JavaScript variable?",
+        answerA: "a. const",
+        answerB: "b. let",
+        answer: "c. Var",
     },
     {
-        question: "4. What is 1 + 1",
-        answerA: "a. 3",
-        answerB: "b. 1",
-        answer: "c. 2",
+        question: "4. A JavaScript variable whose values are written as name:value pairs is referred to as?",
+        answerA: "a. Array",
+        answer: "b. Object ",
+        answerC: "c. String",
+    },
+    {
+        question: "5. A block of code designed to perform a particular task is called a...",
+        answer: "a. function",
+        answerB: "b. conditional statement",
+        answerC: "c. loop",
     },
 
 ]
