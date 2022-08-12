@@ -46,26 +46,41 @@ let quizA = [{
 
 ]
 
+// Quiz B (Maritime terminolgies)
 let quizB = [{
-        question: "1. Which quiz is this?",
-        answerA: "a. A",
-        answer: "b. B",
-        answerC: "c. C",
+        question: "1. Which of the following is not a major department on a ship?",
+        answerA: "a. deck",
+        answerB: "b. catering",
+        answer: "c. security",
     },
     {
-        question: "2. Where are you from?",
-        answerA: "a. name",
-        answerB: "b. age",
-        answer: "c. state",
+        question: "2. At sea, distance is expressed in...",
+        answerA: "a. nautical distance",
+        answer: "b. nautical mile",
+        answerC: "c. nautical meter",
     },
     {
-        question: "3. Where are you going?",
-        answer: "a. home",
-        answerB: "b. age",
-        answerC: "c. state",
+        question: "3. The bottom-most central part of the ship or boat hull on which the entire structure of the ship is built upon.",
+        answer: "a. keel",
+        answerB: "b. bilge",
+        answerC: "c. deck",
+    },
+    {
+        question: "4. The movement of cargo from one ship to another for transfer to a final destination is called?",
+        answerA: "a. cargo transfer",
+        answer: "b. transshipment",
+        answerC: "c. trans-movement",
+    },
+    {
+        question: "5. What is the name of the navigational device that uses the position of the sun, moon, and stars in the sky to determine a ship's location at sea?",
+        answer: "a. Sextant",
+        answerB: "b. Telescope",
+        answerC: "c. Sunglasses",
     }
 
 ]
+
+// Quiz C (Engineering principles)
 let quizC = [{
         question: "1. Which quiz is this?",
         answerA: "a. A",
