@@ -137,6 +137,10 @@ button:hover {
     display: block;
 }
 
+.qtn-inner {
+    display: none;
+}
+
 .qtn-inner.flex {
     display: flex;
     min-height: 70vh;

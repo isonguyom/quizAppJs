@@ -82,28 +82,34 @@ let quizB = [{
 
 // Quiz C (Engineering principles)
 let quizC = [{
-        question: "1. Which quiz is this?",
-        answerA: "a. A",
-        answerB: "b. B",
-        answer: "c. C",
+        question: "1. The principle of floatation, which states that for an object to be partially or fully immersed in a fluid, it must experience an upward force equal to the weight of the fluid displaced by it, was propounded by",
+        answer: "a. Archimedes of Syracuse",
+        answerB: "b. Sir Isaac Newton",
+        answerC: "c.  Daniel Bernoulli",
     },
     {
-        question: "2. What is your age?",
-        answerA: "a. name",
-        answer: "b. age",
-        answerC: "c. state",
+        question: "2. Which law states that the pressure of a given quantity of gas varies inversely with its volume at constant temperature?",
+        answer: "a. Boyle's law",
+        answerB: "b. Charles' law",
+        answerC: "c. Gay-Lussac's law",
     },
     {
-        question: "3. Where are you from?",
-        answerA: "a. name",
-        answerB: "b. age",
-        answer: "c. state",
+        question: "3. Which law states that the volume of an ideal gas is directly proportional to the absolute temperature at constant pressure?",
+        answerA: "a. Boyle's law",
+        answer: "b. Charles' law",
+        answerC: "c. Gay-Lussac's law",
     },
     {
-        question: "4. Where are you going?",
-        answer: "a. home",
-        answerB: "b. age",
-        answerC: "c. state",
+        question: "4. Which law states that as the speed of a moving fluid increases (liquid or gas), the pressure within the fluid decreases?",
+        answer: "a. Bernoulli's principle",
+        answerB: "b. Fick's law",
+        answerC: "c. Graham's law",
+    },
+    {
+        question: "5. Which law states that the rate of diffusion or of effusion of a gas is inversely proportional to the square root of its molecular weight?",
+        answerA: "a. Bernoulli's principle",
+        answerB: "b. Fick's law",
+        answer: "c. Graham's law",
     }
 ]
 
@@ -115,6 +121,7 @@ let runQuiz = function (qId, no, q) {
     for (i = 0; i < quizOptions.length; i++) {
         quizOptions[i].classList.add("short")
     }
+    
 
 
     // Check if quiz has been ran already
@@ -258,7 +265,7 @@ let displayScore = function (id, no) {
         message = "<h3 class='message pass'>Congratulations! you pass the quiz.<br><br>Your score is " + perc + "%</h3>"
     } else {
         message = "<h3 class='message fail'>Ooh! you failed the quiz.<br><br>Your score is " + perc + "%</h3>"
-        
+
     }
 
     // sumOfAns =
