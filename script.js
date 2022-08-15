@@ -4,10 +4,10 @@
 let quizWrapper = document.getElementById("quizWrapper")
 let qtnsWrapper = document.querySelector(".qtn-wrapper")
 let quizOptions = document.querySelectorAll(".quiz-wrapper > div")
-let qtnNode = document.querySelectorAll(".qtn-inner")
+// let qtnNode = document.querySelectorAll(".qtn-inner")
 let quizRan = [false, false, false]
-let quizNode = []
-console.log(qtnNode)
+let qtnNodeArray = []
+console.log(qtnNodeArray)
 
 
 
@@ -116,46 +116,82 @@ let quizC = [{
 
 // Run quiz function
 let runQuiz = function (qId, no, q) {
+    // Indicate the quiz running
+    console.log("Running quiz" + qId + "...")
+
+    // Shorten quiz selection menu wrapper height
     quizWrapper.classList.add("short")
 
+    // Shorten the quiz selection menu height
     for (i = 0; i < quizOptions.length; i++) {
         quizOptions[i].classList.add("short")
     }
-    
 
 
-    // Check if quiz has been ran already
-    if (quizRan[no] == false) {
-        let titleTxt = "<h2>This is quiz " + qId + "</h2>"
-        let createStartBtn = "<button id='startBtn'>Start Quiz</button>";
-
-        // Create quiz questions and description display div
+    // Check if quiz question nodelist has been created if not create new one
+    let currentNode = document.getElementById("qtnInner" + qId)
+    if (!currentNode) {
+        console.log('⛔️ Nodelist does not exist');
         let qtnsInner = document.createElement("div")
         qtnsInner.id = "qtnInner" + qId
         qtnsInner.classList.add("qtn-inner")
         qtnsWrapper.appendChild(qtnsInner)
+        // qtnNodeArray.push(qtnNode)
 
-        // Indicate the quiz running
-        console.log("Running quiz" + qId + "...")
+
+        // Create quiz title text and start quiz button
+        let titleTxt = "<h2>This is quiz " + qId + "</h2>"
+        let createStartBtn = document.createElement("button")
+        createStartBtn.id = "startBtn" + qId
+        createStartBtn.innerHTML = "Start Quiz"
 
         // Create quiz title div
         let quizTitle = document.createElement("div")
         quizTitle.id = "quizTitle" + qId
 
-        // Add title text and start quiz button
-        quizTitle.innerHTML = titleTxt + "<br>" + createStartBtn
+        // Add title text and start quiz button to quiz title container
+        quizTitle.innerHTML = titleTxt + "<br>"
+        quizTitle.appendChild(createStartBtn)
         qtnsInner.appendChild(quizTitle)
 
-        // Load Quiz questions
-        let startBtn = document.getElementById("startBtn")
-        startBtn.addEventListener("click", function (quiz, id, qNo) {
-            quiz = q
-            id = qId
-            qNo = no
-            quizTitle.innerHTML = "<h4>Quiz " + id + "</h4>"
-            displayQuestions(quiz, id, qNo)
-        })
+
+        // Check if quiz has been ran already
+        if (quizRan[no] == false) {
+            // Load Quiz questions
+            let startBtn = document.getElementById("startBtn" + qId)
+            startBtn.addEventListener("click", function (quiz, id, qNo) {
+                quiz = q
+                id = qId
+                qNo = no
+                quizTitle.innerHTML = "<h4>Quiz " + id + "</h4>"
+                displayQuestions(quiz, id, qNo)
+            })
+        }
+    } else {
+        console.log('✅ Nodelist exists');
     }
+
+    // console.log(qtnNodeArray)
+
+    // Hide other quiz container and display only current quiz
+    // let qtnNode = document.querySelectorAll(".qtn-inner")
+    // let qtnsInner = document.getElementById("qtnInner" + qId)
+    // for (i = 0; i < qtnNode.length; i++) {
+    //     qtnNode[i].classList.add("hide")
+    //     if (qtnNode[i] = qtnsInner) {
+    //         qtnNode[i].classList.remove("hide")
+
+    //     }
+    //     // if (currentNode) {
+    //     //     qtnNodeArray[i].classList.remove("hide")
+    //     // } else {
+    //     //     qtnNodeArray[i].classList.add("hide")
+    //     // }
+    // }
+
+
+
+
 }
 
 
@@ -174,12 +210,12 @@ let displayQuestions = function (quiz, id, qNo) {
 
     // Create check score button
     let newSubmitBtn = document.createElement("button")
-    newSubmitBtn.id = "scoreBtn"
+    newSubmitBtn.id = "scoreBtn" + id
     newSubmitBtn.innerHTML = "Check Score"
     qtnsInner.appendChild(newSubmitBtn)
 
     // Get score button and check scores
-    let scoreBtn = document.getElementById("scoreBtn")
+    let scoreBtn = document.getElementById("scoreBtn" + id)
     scoreBtn.addEventListener("click", function (qId, no) {
         qId = id
         no = qNo

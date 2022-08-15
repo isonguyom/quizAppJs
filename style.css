@@ -44,6 +44,7 @@ button {
     border-radius: 7px;
     cursor: pointer;
     background-color: rgb(219, 217, 217);
+    margin-top: 30px;
 }
 
 button:hover {
@@ -120,10 +121,10 @@ button:hover {
     padding: 5px;
 }
 
-#scoreBtn {
+/* .scoreBtn {
     margin-top: 30px;
     cursor: pointer;
-}
+} */
 
 .ans-option.add-border {
     border: 1px dotted grey;
@@ -137,7 +138,7 @@ button:hover {
     display: block;
 }
 
-.qtn-inner {
+.qtn-inner.hide {
     display: none;
 }
 
