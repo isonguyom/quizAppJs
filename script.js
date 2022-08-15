@@ -287,9 +287,9 @@ let displayScore = function (id, no) {
     perc = Math.round((sumOfAns / valArray.length) * 100)
 
     if (perc >= 45) {
-        message = "<h3 class='message pass'>Congratulations! you pass the quiz.<br><br>Your score is " + perc + "%</h3>"
+        message = "<h3 class='message pass'>Congratulations! you pass the quiz " + id + ".<br><br>Your score is " + perc + "%</h3>"
     } else {
-        message = "<h3 class='message fail'>Ooh! you failed the quiz.<br><br>Your score is " + perc + "%</h3>"
+        message = "<h3 class='message fail'>Ooh! you failed the quiz " + id + ".<br><br>Your score is " + perc + "%</h3>"
 
     }
 
