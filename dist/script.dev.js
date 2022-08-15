@@ -4,11 +4,8 @@
 // Global declarations
 var quizWrapper = document.getElementById("quizWrapper");
 var qtnsWrapper = document.querySelector(".qtn-wrapper");
-var quizOptions = document.querySelectorAll(".quiz-wrapper > div"); // let qtnNode = document.querySelectorAll(".qtn-inner")
-
-var quizRan = [false, false, false];
-var qtnNodeArray = [];
-console.log(qtnNodeArray); // QUIZ QUESTIONS
+var quizOptions = document.querySelectorAll(".quiz-wrapper > div");
+var quizRan = [false, false, false]; // QUIZ QUESTIONS
 // Quiz A (Javascipt knowledge)
 
 var quizA = [{
@@ -107,22 +104,10 @@ var runQuiz = function runQuiz(qId, no, q) {
 
   if (!currentNode) {
     // Create the quiz questions container if it does not exist
-    console.log('⛔️ Nodelist does not exist');
     var qtnsInner = document.createElement("div");
     qtnsInner.id = "qtnInner" + qId;
     qtnsInner.classList.add("qtn-inner");
-    qtnsWrapper.appendChild(qtnsInner); // qtnNodeArray.push(qtnNode)
-    // console.log(qtnNodeArray)
-    // let toNodeList = function (qtnNodeArray) {
-    //     let fragment = document.createDocumentFragment();
-    //     qtnNodeArray.forEach(function (item) {
-    //         fragment.appendChild(item.cloneNode());
-    //     });
-    //     return fragment.childNodes;
-    // };
-    // console.log(toNodeList())
-    // toNodeList()
-
+    qtnsWrapper.appendChild(qtnsInner);
     toggleQtnNode(qId); // Create quiz title text and start quiz button
 
     var titleTxt = "<h2>This is quiz " + qId + "</h2>";
@@ -150,22 +135,7 @@ var runQuiz = function runQuiz(qId, no, q) {
     }
   } else {
     toggleQtnNode(qId);
-  } // console.log(qtnNodeArray)
-  // Hide other quiz container and display only current quiz
-  // let qtnNode = document.querySelectorAll(".qtn-inner")
-  // let qtnsInner = document.getElementById("qtnInner" + qId)
-  // for (i = 0; i < qtnNode.length; i++) {
-  //     qtnNode[i].classList.add("hide")
-  //     if (qtnNode[i] = qtnsInner) {
-  //         qtnNode[i].classList.remove("hide")
-  //     }
-  //     // if (currentNode) {
-  //     //     qtnNodeArray[i].classList.remove("hide")
-  //     // } else {
-  //     //     qtnNodeArray[i].classList.add("hide")
-  //     // }
-  // }
-
+  }
 };
 
 var toggleQtnNode = function toggleQtnNode(qId) {
@@ -175,8 +145,7 @@ var toggleQtnNode = function toggleQtnNode(qId) {
     var currentNode = document.getElementById("qtnInner" + qId);
 
     if (qtnNode[i] == currentNode) {
-      console.log("I am working on this node");
-      currentNode.classList.add("active");
+      qtnNode[i].classList.add("active");
     } else {
       qtnNode[i].classList.remove("active");
     }
@@ -266,7 +235,7 @@ var displayScore = function displayScore(id, no) {
       val = 0;
     }
 
-    valArray.push(val); // console.log(valArray)
+    valArray.push(val);
   } // Sum score
 
 
@@ -281,14 +250,13 @@ var displayScore = function displayScore(id, no) {
     message = "<h3 class='message pass'>Congratulations! you pass the quiz.<br><br>Your score is " + perc + "%</h3>";
   } else {
     message = "<h3 class='message fail'>Ooh! you failed the quiz.<br><br>Your score is " + perc + "%</h3>";
-  } // sumOfAns =
+  }
 
-
-  console.log(valArray + "=" + sumOfAns + "perc = " + perc);
   qtnsInner.innerHTML = message;
   qtnsInner.classList.add("message");
   toggleQtnNode(id);
   quizRan[no] = true;
+  console.log("Complete quiz");
 }; // Event origin
 
 
