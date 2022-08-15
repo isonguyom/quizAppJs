@@ -106,12 +106,24 @@ var runQuiz = function runQuiz(qId, no, q) {
   var currentNode = document.getElementById("qtnInner" + qId);
 
   if (!currentNode) {
+    // Create the quiz questions container if it does not exist
     console.log('⛔️ Nodelist does not exist');
     var qtnsInner = document.createElement("div");
     qtnsInner.id = "qtnInner" + qId;
     qtnsInner.classList.add("qtn-inner");
     qtnsWrapper.appendChild(qtnsInner); // qtnNodeArray.push(qtnNode)
-    // Create quiz title text and start quiz button
+    // console.log(qtnNodeArray)
+    // let toNodeList = function (qtnNodeArray) {
+    //     let fragment = document.createDocumentFragment();
+    //     qtnNodeArray.forEach(function (item) {
+    //         fragment.appendChild(item.cloneNode());
+    //     });
+    //     return fragment.childNodes;
+    // };
+    // console.log(toNodeList())
+    // toNodeList()
+
+    toggleQtnNode(qId); // Create quiz title text and start quiz button
 
     var titleTxt = "<h2>This is quiz " + qId + "</h2>";
     var createStartBtn = document.createElement("button");
@@ -137,7 +149,7 @@ var runQuiz = function runQuiz(qId, no, q) {
       });
     }
   } else {
-    console.log('✅ Nodelist exists');
+    toggleQtnNode(qId);
   } // console.log(qtnNodeArray)
   // Hide other quiz container and display only current quiz
   // let qtnNode = document.querySelectorAll(".qtn-inner")
@@ -154,6 +166,21 @@ var runQuiz = function runQuiz(qId, no, q) {
   //     // }
   // }
 
+};
+
+var toggleQtnNode = function toggleQtnNode(qId) {
+  var qtnNode = document.querySelectorAll(".qtn-inner");
+
+  for (i = 0; i < qtnNode.length; i++) {
+    var currentNode = document.getElementById("qtnInner" + qId);
+
+    if (qtnNode[i] == currentNode) {
+      console.log("I am working on this node");
+      currentNode.classList.add("active");
+    } else {
+      qtnNode[i].classList.remove("active");
+    }
+  }
 }; // Function to display quiz questions
 
 
@@ -259,7 +286,8 @@ var displayScore = function displayScore(id, no) {
 
   console.log(valArray + "=" + sumOfAns + "perc = " + perc);
   qtnsInner.innerHTML = message;
-  qtnsInner.classList.add("flex");
+  qtnsInner.classList.add("message");
+  toggleQtnNode(id);
   quizRan[no] = true;
 }; // Event origin
 

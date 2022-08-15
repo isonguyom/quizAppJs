@@ -121,11 +121,6 @@ button:hover {
     padding: 5px;
 }
 
-/* .scoreBtn {
-    margin-top: 30px;
-    cursor: pointer;
-} */
-
 .ans-option.add-border {
     border: 1px dotted grey;
 }
@@ -138,18 +133,27 @@ button:hover {
     display: block;
 }
 
-.qtn-inner.hide {
+.qtn-inner {
     display: none;
 }
 
-.qtn-inner.flex {
-    display: flex;
+.qtn-inner.message.active {
     min-height: 70vh;
     justify-content: center;
     align-items: center;
     text-align: center;
     line-height: 25px;
 }
+
+.qtn-inner.active {
+    display: block;
+}
+
+.qtn-inner.message.active {
+    display: flex;
+}
+
+
 
 .message.pass {
     color: green;

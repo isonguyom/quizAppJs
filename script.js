@@ -5,8 +5,8 @@ let quizWrapper = document.getElementById("quizWrapper")
 let qtnsWrapper = document.querySelector(".qtn-wrapper")
 let quizOptions = document.querySelectorAll(".quiz-wrapper > div")
 // let qtnNode = document.querySelectorAll(".qtn-inner")
-let quizRan = [false, false, false]
-let qtnNodeArray = []
+const quizRan = [false, false, false]
+const qtnNodeArray = []
 console.log(qtnNodeArray)
 
 
@@ -131,13 +131,28 @@ let runQuiz = function (qId, no, q) {
     // Check if quiz question nodelist has been created if not create new one
     let currentNode = document.getElementById("qtnInner" + qId)
     if (!currentNode) {
+        // Create the quiz questions container if it does not exist
         console.log('⛔️ Nodelist does not exist');
         let qtnsInner = document.createElement("div")
         qtnsInner.id = "qtnInner" + qId
         qtnsInner.classList.add("qtn-inner")
         qtnsWrapper.appendChild(qtnsInner)
         // qtnNodeArray.push(qtnNode)
+        // console.log(qtnNodeArray)
 
+
+        // let toNodeList = function (qtnNodeArray) {
+        //     let fragment = document.createDocumentFragment();
+        //     qtnNodeArray.forEach(function (item) {
+        //         fragment.appendChild(item.cloneNode());
+        //     });
+        //     return fragment.childNodes;
+
+        // };
+        // console.log(toNodeList())
+        // toNodeList()
+
+toggleQtnNode(qId)
 
         // Create quiz title text and start quiz button
         let titleTxt = "<h2>This is quiz " + qId + "</h2>"
@@ -168,8 +183,9 @@ let runQuiz = function (qId, no, q) {
             })
         }
     } else {
-        console.log('✅ Nodelist exists');
+        toggleQtnNode(qId)
     }
+
 
     // console.log(qtnNodeArray)
 
@@ -192,6 +208,19 @@ let runQuiz = function (qId, no, q) {
 
 
 
+}
+
+let  toggleQtnNode = function (qId) {
+    let qtnNode = document.querySelectorAll(".qtn-inner")
+    for (i = 0; i < qtnNode.length; i++) {
+        let currentNode = document.getElementById("qtnInner" + qId)
+        if (qtnNode[i] == currentNode) {
+            console.log("I am working on this node")
+            currentNode.classList.add("active")
+        } else {
+            qtnNode[i].classList.remove("active")
+        }
+    }
 }
 
 
@@ -274,7 +303,7 @@ let getAns = function (obj) {
 // Calculate and display the score
 let displayScore = function (id, no) {
     let qtnsInner = document.getElementById("qtnInner" + id)
-    let valArray = [];
+    const valArray = [];
     let val, perc, message = "",
         sumOfAns = 0
     let selected = document.querySelectorAll(".add-border")
@@ -307,7 +336,8 @@ let displayScore = function (id, no) {
     // sumOfAns =
     console.log(valArray + "=" + sumOfAns + "perc = " + perc)
     qtnsInner.innerHTML = message
-    qtnsInner.classList.add("flex")
+    qtnsInner.classList.add("message")
+    toggleQtnNode(id)
     quizRan[no] = true
 }
 
